@@ -518,16 +518,24 @@ def trigger_manual_collection(
     start_collection(plan_dict)
     return get_system_status()
 
-@app.get("/indices", response_model=EconometricIndicesResponse, summary="Compute Jevons Elementary & National Price Indices", tags=["Econometrics"])
+@app.get("/indices", response_model=EconometricIndicesResponse, summary="Compute Elementary & National Price Indices (Jevons / Dutot / Carli)", tags=["Econometrics"])
 def compute_indices(
     observation_date: Optional[str] = Query(None, description="Observation day in YYYY-MM-DD format"),
+    formula: str = Query("jevons", description="Elementary index formula: 'jevons' (recommended), 'dutot', or 'carli'"),
     authenticated: bool = Depends(verify_access_token),
 ):
     """
-    Computes the axiomatic Jevons Price Index for each route and booking horizon,
-    and aggregates them into the National Airfare Index weighted by DGCA Passenger Traffic shares.
+    Computes elementary price index per route and horizon using the specified formula:
+    - **jevons** (default): Axiomatic geometric mean of price relatives. Unbiased and scale-invariant.
+    - **dutot**: Ratio of arithmetic mean prices (can be integrated if MoSPI requires backward compatibility).
+    - **carli**: Arithmetic mean of price relatives.
+    Aggregated to the National Airfare Index using DGCA Table 5.01 Passenger Traffic weights.
     """
     target_date = observation_date or now().date().isoformat()
+    norm_formula = formula.lower().strip()
+    if norm_formula not in ("jevons", "dutot", "carli"):
+        raise HTTPException(status_code=400, detail="Invalid formula. Must be 'jevons', 'dutot', or 'carli'.")
+
     with get_db() as c:
         latest_run = c.execute(
             """SELECT id, substr(started, 1, 10) as dt FROM runs 
@@ -543,7 +551,6 @@ def compute_indices(
         rows = c.execute("SELECT payload FROM fares WHERE run_id=?", (latest_run["id"],)).fetchall()
         all_fares = [json.loads(r[0]) for r in rows]
 
-    # Group by route and horizon
     grouped: Dict[tuple, List[float]] = {}
     for f in all_fares:
         key = (f["route"], f["horizon"])
@@ -557,13 +564,21 @@ def compute_indices(
         for h in HORIZONS:
             fares_list = grouped.get((route, h), [])
             if fares_list:
-                # Jevons Formula: exp( (1/n) * sum( ln(P_t / P_0) ) )
-                log_sum = sum(math.log(p / base_price) for p in fares_list)
-                geometric_relative = math.exp(log_sum / len(fares_list))
-                index_val = round(100.0 * geometric_relative, 2)
                 curr_mean = round(sum(fares_list) / len(fares_list), 2)
+                if norm_formula == "dutot":
+                    # Dutot: Ratio of arithmetic means (sum(P_t) / sum(P_0))
+                    rel = curr_mean / base_price
+                elif norm_formula == "carli":
+                    # Carli: Arithmetic mean of price relatives
+                    rel = sum(p / base_price for p in fares_list) / len(fares_list)
+                else:
+                    # Jevons (Default & Recommended): Geometric mean of price relatives
+                    log_sum = sum(math.log(p / base_price) for p in fares_list)
+                    rel = math.exp(log_sum / len(fares_list))
+
+                index_val = round(100.0 * rel, 2)
             else:
-                geometric_relative = 1.0
+                rel = 1.0
                 index_val = 100.0
                 curr_mean = float(base_price)
 
@@ -573,7 +588,7 @@ def compute_indices(
                 matched_count=len(fares_list),
                 base_fare=float(base_price),
                 current_geometric_mean=curr_mean,
-                price_relative=round(geometric_relative, 4),
+                price_relative=round(rel, 4),
                 index_value=index_val,
             )
             route_indices.append(item)
@@ -586,10 +601,16 @@ def compute_indices(
         weighted_sum = sum(w * idx for w, idx in route_vals)
         national_dict[f"T+{h}"] = round(weighted_sum / total_w, 2)
 
+    methodology_desc = {
+        "jevons": "Jevons Elementary Aggregator (Axiomatic Geometric Mean) with DGCA Table 5.01 Traffic Weights",
+        "dutot": "Dutot Elementary Aggregator (Ratio of Arithmetic Means - MoSPI Legacy Option) with DGCA Table 5.01 Traffic Weights",
+        "carli": "Carli Elementary Aggregator (Arithmetic Mean of Price Relatives) with DGCA Table 5.01 Traffic Weights",
+    }.get(norm_formula, "Custom Formula")
+
     return {
         "observation_date": run_date,
         "mode": MODE,
-        "methodology": "Jevons Elementary Aggregator (Axiomatic Geometric Mean) with DGCA Table 5.01 Traffic Weights",
+        "methodology": methodology_desc,
         "national_indices": national_dict,
         "route_horizon_indices": route_indices,
     }

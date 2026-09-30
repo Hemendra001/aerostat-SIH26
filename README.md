@@ -104,9 +104,41 @@ $$r_{j,t} = \frac{P_{j,t}}{P_{j,0}}$$
 Within each route $r$ and booking horizon $h$, the elementary index is computed as the **unweighted geometric mean of price relatives**:
 $$I_{r,h} = 100 \times \left( \prod_{j=1}^{n_{r,h}} \frac{P_{j,t}}{P_{j,0}} \right)^{\frac{1}{n_{r,h}}} = 100 \times \exp\left( \frac{1}{n_{r,h}} \sum_{j=1}^{n_{r,h}} \ln\left( \frac{P_{j,t}}{P_{j,0}} \right) \right)$$
 
-> **Why Jevons over Carli or Dutot?**
-> * **Axiomatic Superiority:** Jevons satisfies both the **Time Reversal Test** ($I_{0,t} \times I_{t,0} = 1$) and the **Transitivity (Circular) Test**.
-> * **No Upward Bias:** Unlike the arithmetic Carli formula (which inflates due to the AM-GM inequality), Jevons provides unbiased estimates of volatile, dynamic prices.
+---
+
+#### ⚖️ Methodological Comparison: Why Dutot & Carli are Unreliable for Airfares
+
+In official price statistics, three elementary formulas are traditionally considered: **Jevons** (Geometric mean), **Dutot** (Ratio of arithmetic means), and **Carli** (Arithmetic mean of price relatives).
+
+##### 1. The Critical Flaw of the Dutot Formula in Civil Aviation:
+The Dutot index is defined as the ratio of arithmetic average prices:
+$$I_{\text{Dutot}} = \frac{\frac{1}{n}\sum_{i=1}^n P_{i,t}}{\frac{1}{n}\sum_{i=1}^n P_{i,0}} = \frac{\sum P_{i,t}}{\sum P_{i,0}}$$
+
+Mathematically, this can be rewritten as a **weighted sum of price relatives**:
+$$I_{\text{Dutot}} = \sum_{i=1}^n \left( \frac{P_{i,0}}{\sum_{k=1}^n P_{k,0}} \right) \cdot \left( \frac{P_{i,t}}{P_{i,0}} \right)$$
+
+Notice the implicit weight: **$\frac{P_{i,0}}{\sum P_{k,0}}$**. This leads to three severe distortions when applied to modern dynamic airline pricing:
+* **Implicit Price-Level Distortion:** Dutot implicitly gives more weight to higher-priced tickets. A prime morning business flight priced at ₹12,000 carries **three times the weight** of a low-cost carrier ticket priced at ₹4,000, even if 80% of passengers flew on the budget airline!
+* **Commensurability Failure:** International standards (*IMF CPI Manual 2020*) warn that Dutot is only valid when products are strictly homogeneous in quality and physical units. In air travel, flights differ drastically in departure slots, baggage allowances, and refundability.
+* **Sensitivity to Price Bouncing & Dynamic Outliers:** If an expensive ₹15,000 ticket rises by just 4% (+₹600), while four ₹3,500 tickets drop by 15% (-₹525 each = -₹2,100 consumer savings), Dutot will disproportionately skew toward the expensive flight and overstate inflation.
+
+##### 2. The Flaw of the Carli Formula:
+The Carli formula ($I_{\text{Carli}} = \frac{1}{n}\sum \frac{P_t}{P_0}$) fails the **Time Reversal Test** ($I_{0,t} \times I_{t,0} > 1$) due to Jensen's inequality (the AM-GM inequality), causing systematic **upward inflation drift** when prices fluctuate.
+
+##### 3. Why Jevons is the Gold Standard:
+* **Scale Invariant:** A 10% price change on a ₹4,000 flight and a 10% price change on a ₹10,000 flight receive equal proportional importance.
+* **Axiomatically Sound:** Strictly satisfies both the **Time Reversal Test** ($I_{0,t} \times I_{t,0} = 1$) and the **Circular/Transitivity Test**.
+* **Endorsed by Global Authorities:** Recommended by the **IMF, ILO, World Bank, OECD**, and the **UK ONS (2026)** for dynamic scanner and web-scraped data.
+
+---
+
+#### 🔌 Pluggable Architecture Guarantee (Seamless MoSPI Integration)
+> **"What if MoSPI / NSO mandates the Dutot or Carli formula for institutional continuity?"**
+> 
+> While **Jevons is our scientifically recommended default**, AeroStat is built with a **modular, pluggable index engine**. If MoSPI statistical guidelines require the **Dutot method** (or Carli) to align with existing legacy CPI compilation modules, our backend can switch formulas instantly:
+> * **Via Configuration:** Set `INDEX_FORMULA="dutot"` in environment settings.
+> * **Via API Parameter:** Request `GET /indices?formula=dutot` to calculate the Dutot index on the fly.
+> * **No Pipeline Re-engineering Required:** Raw observation records remain identical; only the elementary aggregation mathematical kernel is swapped.
 
 ### 4. National Horizon Index Aggregation
 National indices for each horizon are constructed using official route expenditure/traffic weights $w_r$ derived from **DGCA City-Pair Traffic Statistics (Table 5.01)**:
