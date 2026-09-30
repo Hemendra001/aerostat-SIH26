@@ -1,0 +1,22 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Databases
+*.sqlite3
+*.db
+
+# Node dependencies & logs
+node_modules/
+npm-debug.log*
+
+# Environments
+.env
+.venv
+env/
+venv/
+
+# Operating System files
+.DS_Store
+Thumbs.db
