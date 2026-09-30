@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: aerostat-sih26
+    env: static
+    buildCommand: echo "Building AeroStat..."
+    staticPublishPath: ./dist
+    pullRequestPreviewsEnabled: true

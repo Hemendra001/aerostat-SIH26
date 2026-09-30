@@ -14,5 +14,6 @@ const server = http.createServer((req, res) => {
     res.end(data);
   });
 });
-server.on('error', error => { console.error(error.message); process.exitCode = 1; });
-server.listen(4173, '127.0.0.1', () => console.log('AeroStat: http://127.0.0.1:4173'));
+const PORT = process.env.PORT || 4173;
+const HOST = process.env.HOST || '0.0.0.0';
+server.listen(PORT, HOST, () => console.log(`AeroStat: http://${HOST}:${PORT}`));
