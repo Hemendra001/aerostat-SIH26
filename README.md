@@ -11,10 +11,13 @@
 [![Team](https://img.shields.io/badge/Team-OMEGA8-purple?style=for-the-badge)]()
 [![Team ID](https://img.shields.io/badge/Team_ID-183555-blueviolet?style=for-the-badge)]()
 [![Category](https://img.shields.io/badge/Category-Software-critical?style=for-the-badge)]()
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Render_Online-46E3B7?style=for-the-badge&logo=render&logoColor=black)](https://aerostat-sih26.onrender.com)
 
 **A production-grade, transparent, and resilient airfare intelligence observatory designed to augment the official Consumer Price Index (CPI) with high-frequency, advance-purchase-adjusted price signals.**
 
-[🚀 60-Second Quick Start](#-quick-start-for-evaluators) • [💡 Problem & Solution](#-problem-statement--core-solution) • [📐 Econometric Methodology](#-econometric-methodology--jevons-formulation) • [🏗 Architecture](#-system-architecture) • [✨ Key Features](#-key-features--prototype-walkthrough) • [🛡 Challenges & Mitigations](#-challenges--engineering-mitigations) • [📚 Standards & References](#-academic--official-standards-compliance)
+### 🌐 [Click Here to View Live Prototype on Render](https://aerostat-sih26.onrender.com)
+
+[🌐 Live Demo](https://aerostat-sih26.onrender.com) • [⚡ Quick Start](#-quick-start-for-evaluators) • [💡 Problem & Solution](#-problem-statement--core-solution) • [📐 Econometric Methodology](#-econometric-methodology--jevons-formulation) • [🏗 Architecture](#-system-architecture) • [✨ Key Features](#-key-features--prototype-walkthrough) • [🛡 Challenges & Mitigations](#-challenges--engineering-mitigations) • [📚 Standards & References](#-academic--official-standards-compliance)
 
 ---
 
@@ -30,10 +33,17 @@ India's civil aviation market is among the fastest growing in the world, charact
 
 ## ⚡ Quick Start for Evaluators
 
-The prototype is engineered for **instant, zero-friction local execution**. No external database setup, API credentials, or heavy builds are required to evaluate the core system.
+The prototype is accessible both as a **live cloud deployment** and as an **instant zero-friction local installation**.
 
-### Option 1: Run the Interactive Frontend Observatory (Recommended)
+### 🌟 Option 1: Live Cloud Deployment (Instant Evaluation)
+Evaluators can test the fully interactive platform directly in the browser:
+👉 **[https://aerostat-sih26.onrender.com](https://aerostat-sih26.onrender.com)**
 
+*✨ Hosted on Render's global Edge CDN — zero installation or setup required. Loads complete route datasets, horizon curves, Jevons index calculations, and audit tools.*
+
+---
+
+### Option 2: Run Locally with Node.js
 1. Ensure **Node.js** (v18+) is installed.
 2. In the repository root directory, run:
    ```bash
@@ -43,14 +53,13 @@ The prototype is engineered for **instant, zero-friction local execution**. No e
    ```
    http://127.0.0.1:4173
    ```
-*✨ The interactive dashboard will load immediately with complete route datasets, horizon curves, Jevons index calculations, and audit tools.*
 
-### Option 2: Run with Python HTTP Server
+### Option 3: Run Locally with Python HTTP Server
 ```bash
 python -m http.server 4173 --bind 127.0.0.1 --directory dist
 ```
 
-### Option 3: Run the Collection Service & REST API (Backend)
+### Option 4: Run the Collection Service & REST API (Backend)
 ```bash
 cd backend
 python server.py
