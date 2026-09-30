@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en" data-color-mode="light" data-light-theme="light" data-dark-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hemendra001/aerostat-SIH26: Real-Time Airfare Price Index for India</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    :root {
+      --gh-bg: #f6f8fa;
+      --gh-border: #d0d7de;
+      --gh-text: #1f2328;
+      --gh-header-bg: #24292f;
+      --gh-card-bg: #ffffff;
+      --gh-btn-bg: #f6f8fa;
+      --gh-tab-active: #fd8c73;
+    }
+    [data-theme="dark"] {
+      --gh-bg: #0d1117;
+      --gh-border: #30363d;
+      --gh-text: #e6edf3;
+      --gh-header-bg: #161b22;
+      --gh-card-bg: #0d1117;
+      --gh-btn-bg: #21262d;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+      background-color: var(--gh-bg);
+      color: var(--gh-text);
+      transition: background 0.2s, color 0.2s;
+    }
+    .gh-topbar {
+      background-color: #24292f;
+      color: #ffffff;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 14px;
+    }
+    .gh-brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .gh-logo {
+      fill: #ffffff;
+    }
+    .gh-search-sim {
+      background: #161b22;
+      border: 1px solid #57606a;
+      border-radius: 6px;
+      padding: 5px 12px;
+      color: #8b949e;
+      font-size: 12px;
+      width: 240px;
+    }
+    .gh-repo-header {
+      background: var(--gh-card-bg);
+      border-bottom: 1px solid var(--gh-border);
+      padding: 16px 32px 0 32px;
+    }
+    .gh-repo-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .gh-repo-name {
+      font-size: 20px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .gh-repo-name a {
+      color: #0969da;
+      text-decoration: none;
+    }
+    .gh-badge-public {
+      font-size: 12px;
+      border: 1px solid var(--gh-border);
+      border-radius: 2em;
+      padding: 2px 8px;
+      color: #656d76;
+    }
+    .gh-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .gh-btn {
+      background: var(--gh-btn-bg);
+      border: 1px solid var(--gh-border);
+      border-radius: 6px;
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--gh-text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .gh-tabs {
+      display: flex;
+      gap: 16px;
+      margin-top: 12px;
+      overflow-x: auto;
+    }
+    .gh-tab {
+      padding: 8px 12px;
+      font-size: 14px;
+      color: #656d76;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .gh-tab.active {
+      color: var(--gh-text);
+      border-bottom: 2px solid #fd8c73;
+      font-weight: 600;
+    }
+    .gh-container {
+      max-width: 1040px;
+      margin: 24px auto;
+      padding: 0 16px;
+    }
+    .gh-file-box {
+      border: 1px solid var(--gh-border);
+      border-radius: 6px;
+      background: var(--gh-card-bg);
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(31,35,40,0.08);
+    }
+    .gh-file-header {
+      background: var(--gh-bg);
+      border-bottom: 1px solid var(--gh-border);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .gh-file-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .gh-readme-content {
+      padding: 36px 40px;
+    }
+    .markdown-body {
+      box-sizing: border-box;
+      min-width: 200px;
+      max-width: 980px;
+      margin: 0 auto;
+      background: transparent !important;
+    }
+    .mermaid {
+      background: #f6f8fa;
+      border: 1px solid #d0d7de;
+      border-radius: 6px;
+      padding: 16px;
+      margin: 16px 0;
+      text-align: center;
+    }
+    [data-theme="dark"] .mermaid {
+      background: #161b22;
+      border-color: #30363d;
+    }
+    .theme-toggle {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #24292f;
+      color: #fff;
+      border: 1px solid #57606a;
+      border-radius: 20px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top GitHub Bar -->
+  <div class="gh-topbar">
+    <div class="gh-brand-wrap">
+      <svg height="32" viewBox="0 0 16 16" width="32" class="gh-logo"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path></svg>
+      <div class="gh-search-sim">Type / to search</div>
+      <span style="color:#c9d1d9;font-weight:600;">Pull requests</span>
+      <span style="color:#c9d1d9;font-weight:600;">Issues</span>
+      <span style="color:#c9d1d9;font-weight:600;">Codespaces</span>
+      <span style="color:#c9d1d9;font-weight:600;">Marketplace</span>
+      <span style="color:#c9d1d9;font-weight:600;">Explore</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span style="color:#8b949e;font-size:12px;">Smart India Hackathon 2026</span>
+      <div style="width:24px;height:24px;border-radius:50%;background:#fd8c73;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold;color:#fff;">O8</div>
+    </div>
+  </div>
+
+  <!-- Repository Header -->
+  <div class="gh-repo-header">
+    <div class="gh-repo-title">
+      <div class="gh-repo-name">
+        <svg height="16" viewBox="0 0 16 16" width="16" fill="#656d76"><path d="M2 2.5A2.5 2.5 0 0 1 4.5 0h8.75a.75.75 0 0 1 .75.75v12.5a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h1.75v-2h-8a1 1 0 0 0-.714 1.7.75.75 0 1 1-1.072 1.05A2.495 2.495 0 0 1 2 11.5Zm10.5-1h-8a1 1 0 0 0-1 1v6.708A2.486 2.486 0 0 1 4.5 9h8ZM5 12.25a.25.25 0 0 1 .25-.25h6.5a.25.25 0 0 1 .25.25v1.5a.25.25 0 0 1-.25.25h-6.5a.25.25 0 0 1-.25-.25Z"></path></svg>
+        <a href="#">Hemendra001</a> / <a href="#" style="font-weight:bold;">aerostat-SIH26</a>
+        <span class="gh-badge-public">Public</span>
+      </div>
+      <div class="gh-actions">
+        <button class="gh-btn"><svg height="16" viewBox="0 0 16 16" width="16" fill="currentColor"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Z"></path></svg> Star <b>24</b></button>
+        <button class="gh-btn"><svg height="16" viewBox="0 0 16 16" width="16" fill="currentColor"><path d="M5 3.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm0 2.122a2.25 2.25 0 1 0-1.5 0v.878A2.25 2.25 0 0 0 5.75 8.5h1.5v2.128a2.251 2.251 0 1 0 1.5 0V8.5h1.5a2.25 2.25 0 0 0 2.25-2.25v-.878a2.25 2.25 0 1 0-1.5 0v.878a.75.75 0 0 1-.75.75h-4.5A.75.75 0 0 1 5 6.25v-.878ZM12.5 3.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM8 12.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"></path></svg> Fork <b>12</b></button>
+      </div>
+    </div>
+    <div class="gh-tabs">
+      <div class="gh-tab active"><svg height="16" viewBox="0 0 16 16" width="16" fill="currentColor"><path d="m11.28 3.22 4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734L13.94 8l-3.72-3.72a.749.749 0 0 1 .326-1.275.749.749 0 0 1 .734.215Zm-6.56 0a.751.751 0 0 1 1.06 0 .75.75 0 0 1 0 1.06L2.06 8l3.72 3.72a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L.47 8.53a.75.75 0 0 1 0-1.06l4.25-4.25Z"></path></svg> Code</div>
+      <div class="gh-tab"><svg height="16" viewBox="0 0 16 16" width="16" fill="currentColor"><path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"></path><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Z"></path></svg> Issues <span style="background:#d0d7de;border-radius:10px;padding:0 6px;font-size:11px;">0</span></div>
+      <div class="gh-tab"><svg height="16" viewBox="0 0 16 16" width="16" fill="currentColor"><path d="M1.5 3.25a2.25 2.25 0 1 1 3 2.122v5.256a2.251 2.251 0 1 1-1.5 0V5.372A2.25 2.25 0 0 1 1.5 3.25Zm5.677-.177L9.5 5.396l2.323-2.323a.75.75 0 0 1 1.06 1.06L10.56 6.46l2.324 2.323a.75.75 0 1 1-1.06 1.06L9.5 7.525 7.177 9.846a.75.75 0 0 1-1.06-1.06l2.324-2.324L6.117 4.134a.75.75 0 0 1 1.06-1.06Z"></path></svg> Pull requests</div>
+      <div class="gh-tab">Actions</div>
+      <div class="gh-tab">Security</div>
+      <div class="gh-tab">Insights</div>
+    </div>
+  </div>
+
+  <!-- Container -->
+  <div class="gh-container">
+    <div class="gh-file-box">
+      <div class="gh-file-header">
+        <div class="gh-file-title">
+          <svg height="16" viewBox="0 0 16 16" width="16" fill="#656d76"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v12.5A1.75 1.75 0 0 1 14.25 16H1.75A1.75 1.75 0 0 1 0 14.25Zm1.75-.25a.25.25 0 0 0-.25.25v12.5c0 .069.027.135.073.182.047.046.113.073.182.073h12.5a.25.25 0 0 0 .25-.25V1.75a.25.25 0 0 0-.25-.25ZM3.75 4h8.5a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1 0-1.5Zm0 3.5h8.5a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1 0-1.5Zm0 3.5h5.5a.75.75 0 0 1 0 1.5h-5.5a.75.75 0 0 1 0-1.5Z"></path></svg>
+          README.md
+        </div>
+        <div style="font-size:12px;color:#656d76;">
+          289 lines · 16.8 KB
+        </div>
+      </div>
+      <div class="gh-readme-content">
+        <article id="preview-target" class="markdown-body"></article>
+      </div>
+    </div>
+  </div>
+
+  <button class="theme-toggle" id="theme-btn">
+    🌓 Toggle Dark / Light Theme
+  </button>
+
+  <script>
+    const rawMarkdown = "<div align=\"center\">\n\n<img src=\"aerostat-logo.png\" alt=\"AeroStat Logo\" width=\"380\" />\n\n# AeroStat: Real-Time Airfare Price Index for India\n### High-Frequency Automated Web Scraping & Econometric Intelligence for CPI Augmentation\n\n[![Smart India Hackathon 2026](https://img.shields.io/badge/SIH-2026-blue?style=for-the-badge&logo=gov.in)](https://www.sih.gov.in/)\n[![Problem Statement ID](https://img.shields.io/badge/PS_ID-SIH26056-orange?style=for-the-badge)](https://www.sih.gov.in/)\n[![Theme](https://img.shields.io/badge/Theme-Smart_Automation-green?style=for-the-badge)]()\n[![Team](https://img.shields.io/badge/Team-OMEGA8-purple?style=for-the-badge)]()\n[![Team ID](https://img.shields.io/badge/Team_ID-183555-blueviolet?style=for-the-badge)]()\n[![Category](https://img.shields.io/badge/Category-Software-critical?style=for-the-badge)]()\n\n**A production-grade, transparent, and resilient airfare intelligence observatory designed to augment the official Consumer Price Index (CPI) with high-frequency, advance-purchase-adjusted price signals.**\n\n[\ud83d\ude80 60-Second Quick Start](#-quick-start-for-evaluators) \u2022 [\ud83d\udca1 Problem & Solution](#-problem-statement--core-solution) \u2022 [\ud83d\udcd0 Econometric Methodology](#-econometric-methodology--jevons-formulation) \u2022 [\ud83c\udfd7 Architecture](#-system-architecture) \u2022 [\u2728 Key Features](#-key-features--prototype-walkthrough) \u2022 [\ud83d\udee1 Challenges & Mitigations](#-challenges--engineering-mitigations) \u2022 [\ud83d\udcda Standards & References](#-academic--official-standards-compliance)\n\n---\n\n</div>\n\n## \ud83d\udccc Executive Summary\n\nIndia's civil aviation market is among the fastest growing in the world, characterized by aggressive dynamic pricing, seasonal surges, and complex ancillary unbundling. However, the official Consumer Price Index (CPI) compiled by the **Ministry of Statistics and Programme Implementation (MoSPI)** currently tracks airfares through periodic monthly surveys, leaving a **30 to 45-day lag** between real-world fare shocks and published statistics.\n\n**AeroStat** solves this by establishing an automated, multi-source data pipeline that captures daily airfare quotes across domestic trunk routes and 5 standardized booking horizons ($T+1, T+7, T+15, T+30, T+45$). By enforcing a rigorous, standardized consumer fare definition and applying an axiomatic **Jevons Price Index** aggregated with **DGCA/MoSPI passenger traffic weights**, AeroStat delivers timely, auditable, and bias-free airfare indices for national policy and inflation nowcasting.\n\n---\n\n## \u26a1 Quick Start for Evaluators\n\nThe prototype is engineered for **instant, zero-friction local execution**. No external database setup, API credentials, or heavy builds are required to evaluate the core system.\n\n### Option 1: Run the Interactive Frontend Observatory (Recommended)\n\n1. Ensure **Node.js** (v18+) is installed.\n2. In the repository root directory, run:\n   ```bash\n   npm start\n   ```\n3. Open your browser and navigate to:\n   ```\n   http://127.0.0.1:4173\n   ```\n*\u2728 The interactive dashboard will load immediately with complete route datasets, horizon curves, Jevons index calculations, and audit tools.*\n\n### Option 2: Run with Python HTTP Server\n```bash\npython -m http.server 4173 --bind 127.0.0.1 --directory dist\n```\n\n### Option 3: Run the Collection Service & REST API (Backend)\n```bash\ncd backend\npython server.py\n```\n*Runs the SQLite-backed collection daemon, REST endpoints (`/status`, `/observations`, `/schedule`, `/run`), and automated task scheduler.*\n\n---\n\n## \ud83c\udfaf Problem Statement & Core Solution\n\n### The Challenge (SIH26056)\n> *\"Development of a Real-time Airfare Price Index for India through Automated Web Scraping of Airline and Online Travel Aggregator Portals for Augmentation of the Consumer Price Index (CPI).\"*\n\n### Current System (Official CPI) vs. AeroStat (Proposed)\n\n| Dimension | Current Official CPI (Base 2024 / 2012) | AeroStat Real-Time Platform |\n| :--- | :--- | :--- |\n| **Observation Frequency** | 1 single retrospective quote per month | **Daily continuous tracking** across all routes |\n| **Lead Time Awareness** | Blended single departure date; ignores dynamic pricing | **5 Distinct Horizons:** $T+1, T+7, T+15, T+30, T+45$ |\n| **Price Concept** | Susceptible to inconsistent fee quotes | **Uniform Consumer Fare:** Base + Fuel + UDF + Taxes |\n| **Data Sources** | Limited manual sampling or delayed reports | **Multi-source:** Airlines (IndiGo, Air India, SpiceJet, Akasa) + OTAs (MMT, EaseMyTrip, Yatra) |\n| **Policy Latency** | 30\u201345 days publication lag | **Real-time / T+24h** early-warning inflation signals |\n| **Auditability** | Aggregate tables published without granular audit trails | **Full microdata provenance:** Every fare timestamped & verifiable |\n\n---\n\n## \ud83d\udcd0 Econometric Methodology & Jevons Formulation\n\nTo satisfy international statistical standards (IMF/ILO/World Bank/OECD CPI Manual 2020 and UK ONS Airfares Methodology 2026), AeroStat implements an axiomatic **Jevons Elementary Price Index** combined with **Passenger Traffic Volume Weighting**.\n\n### 1. The Standardized Consumer Fare Definition\nAirfares suffer from \"drip pricing\" and unbundled extras. AeroStat enforces a strict definition:\n* **Product:** 1 adult, one-way, non-stop, economy class.\n* **Included (Mandatory):** Base fare + Fuel surcharge (YQ/YR) + User Development Fee (UDF) + Passenger Service Fee (PSF) + Goods and Services Tax (GST) + mandatory checkout convenience charges.\n* **Excluded (Optional):** Seat selection fees, checked baggage add-ons above allowance, priority boarding, in-flight meals, travel insurance.\n\n### 2. Item-Level Price Relative\nFor each matched flight offer $j$ on route $r$ and advance booking horizon $h$, the price relative between current observation period $t$ and base period $0$ is:\n$$r_{j,t} = \\frac{P_{j,t}}{P_{j,0}}$$\n\n### 3. Route-Horizon Elementary Index (Jevons Formula)\nWithin each route $r$ and booking horizon $h$, the elementary index is computed as the **unweighted geometric mean of price relatives**:\n$$I_{r,h} = 100 \\times \\left( \\prod_{j=1}^{n_{r,h}} \\frac{P_{j,t}}{P_{j,0}} \\right)^{\\frac{1}{n_{r,h}}} = 100 \\times \\exp\\left( \\frac{1}{n_{r,h}} \\sum_{j=1}^{n_{r,h}} \\ln\\left( \\frac{P_{j,t}}{P_{j,0}} \\right) \\right)$$\n\n> **Why Jevons over Carli or Dutot?**\n> * **Axiomatic Superiority:** Jevons satisfies both the **Time Reversal Test** ($I_{0,t} \\times I_{t,0} = 1$) and the **Transitivity (Circular) Test**.\n> * **No Upward Bias:** Unlike the arithmetic Carli formula (which inflates due to the AM-GM inequality), Jevons provides unbiased estimates of volatile, dynamic prices.\n\n### 4. National Horizon Index Aggregation\nNational indices for each horizon are constructed using official route expenditure/traffic weights $w_r$ derived from **DGCA City-Pair Traffic Statistics (Table 5.01)**:\n$$I_{\\text{national},h} = \\sum_{r \\in \\text{Routes}} w_r \\cdot I_{r,h} \\quad \\text{where } \\sum_{r} w_r = 1.0$$\n\n### 5. Numerical Worked Example (As Demonstrated in Prototype)\nConsider two matched fare items on `DEL-BOM`:\n* **Item A:** Base = \u20b95,000 $\\rightarrow$ Current = \u20b95,500 ($r_A = 1.10$, +10%)\n* **Item B:** Base = \u20b94,000 $\\rightarrow$ Current = \u20b93,600 ($r_B = 0.90$, -10%)\n\n$$\\text{Jevons Index} = 100 \\times \\sqrt{1.10 \\times 0.90} = 100 \\times \\sqrt{0.99} \\approx \\mathbf{99.50}$$\n*Result: Even though one fare rose by 10% and one dropped by 10%, the basket reflects an overall 0.50% decline, demonstrating the protective nature of geometric aggregation against upward skew.*\n\n---\n\n## \ud83c\udfd7 System Architecture\n\nThe following diagram illustrates AeroStat's end-to-end data processing and validation lifecycle:\n\n```mermaid\nflowchart TD\n    subgraph Sources [\"1. Multi-Portal Fare Ingestion\"]\n        A1[\"Airlines: IndiGo, Air India, SpiceJet, Akasa\"]\n        A2[\"OTAs: MakeMyTrip, EaseMyTrip, Yatra, Cleartrip\"]\n    end\n\n    subgraph Collection [\"2. Headless Collection & Scheduling\"]\n        B1[\"Python Playwright Async Engine\"]\n        B2[\"Cron Scheduler (Daily @ 06:00 IST)\"]\n        B3[\"Polite Harvester: Rate Limiting & Exponential Backoff\"]\n    end\n\n    subgraph Normalization [\"3. Data Cleaning & Normalization\"]\n        C1[\"Standardized Fare Extractor: Base + Taxes + UDF\"]\n        C2[\"Deduplication Engine (Cross-OTA & Carrier Matching)\"]\n        C3[\"Missing / Sold-Out Price Imputation Filter\"]\n    end\n\n    subgraph Storage [\"4. Auditable Storage Layer\"]\n        D1[\"PostgreSQL / SQLite Database\"]\n        D2[\"Full Provenance: Route, Flight, Horizon, Timestamp\"]\n    end\n\n    subgraph Engine [\"5. Econometric Calculation Engine\"]\n        E1[\"Jevons Elementary Aggregator (Pandas / NumPy)\"]\n        E2[\"DGCA / MoSPI Route Weight Matrix (wr)\"]\n        E3[\"5 Distinct Horizon Indices (T+1, T+7, T+15, T+30, T+45)\"]\n    end\n\n    subgraph Delivery [\"6. Policy Consumption & Interactive UI\"]\n        F1[\"FastAPI REST Endpoints (/status, /observations, /indices)\"]\n        F2[\"Interactive Airfare Observatory Dashboard\"]\n        F3[\"MoSPI / RBI Inflation Surveillance & CSV/JSON Export\"]\n    end\n\n    Sources --> Collection\n    Collection --> Normalization\n    Normalization --> Storage\n    Storage --> Engine\n    Engine --> Delivery\n```\n\n---\n\n## \ud83d\udeeb Monitored Basket & Booking Horizons\n\n### The 5 Standardized Advance-Purchase Horizons\nAirline tickets are perishable commodities subject to dynamic yield management algorithms. Tracking a single departure date fails to represent the true consumer experience. AeroStat samples across 5 strategic horizons:\n\n| Horizon | Typical Booking Persona | Price Sensitivity | Volatility Level |\n| :---: | :--- | :--- | :---: |\n| **$T+1$** | Emergency, immediate business, bereavement | Low price sensitivity (Inelastic) | **Extremely High** |\n| **$T+7$** | Short-notice corporate trips, urgent personal travel | Moderate price sensitivity | **High** |\n| **$T+15$** | Planned short-haul travel, domestic business meetings | Balanced elasticity | **Medium** |\n| **$T+30$** | Standard vacationers, festival trips, cost-aware travellers | High price sensitivity (Elastic) | **Low\u2013Moderate** |\n| **$T+45$** | Early holiday planners, group travel, budget leisure | Very high price sensitivity | **Baseline / Stable** |\n\n### The Core High-Density Route Basket\nBased on **DGCA Passenger Traffic Table 5.01**, the prototype tracks India's highest-volume domestic trunk routes:\n\n| Route Code | City Pair | DGCA Traffic Share (Weight $w_r$) | Typical Base Fare (\u20b9) | Key Operating Carriers |\n| :---: | :--- | :---: | :---: | :--- |\n| **DEL-BOM** | Delhi $\\leftrightarrow$ Mumbai | **24.0%** | \u20b94,800 | IndiGo, Air India, Akasa, SpiceJet |\n| **DEL-BLR** | Delhi $\\leftrightarrow$ Bengaluru | **19.0%** | \u20b95,200 | IndiGo, Air India, Akasa |\n| **BLR-BOM** | Bengaluru $\\leftrightarrow$ Mumbai | **16.0%** | \u20b93,400 | IndiGo, Air India, Akasa |\n| **DEL-CCU** | Delhi $\\leftrightarrow$ Kolkata | **15.0%** | \u20b94,600 | IndiGo, Air India, SpiceJet |\n| **BOM-HYD** | Mumbai $\\leftrightarrow$ Hyderabad | **13.0%** | \u20b93,100 | IndiGo, Air India |\n| **DEL-MAA** | Delhi $\\leftrightarrow$ Chennai | **13.0%** | \u20b94,900 | IndiGo, Air India |\n\n---\n\n## \u2728 Key Features & Prototype Walkthrough\n\nAeroStat's interface is structured into dedicated operational workspaces:\n\n### 1. Overview & Live Market Observatory\n* **Real-time KPI Tiles:** Displays National Airfare Index, lowest observed fare, route-specific Jevons index, and observation coverage count.\n* **Lead-Time Price Curve:** Visualizes fare decay from $T+1$ down to $T+45$, highlighting the spread between Average, Lowest, and Base fares.\n* **National Horizon Index Bar Chart:** Quick comparison of inflation across all 5 booking windows relative to Base = 100.\n* **Micro-Data Inspection Table:** Tabular listing of individual airline flights, prices with tax breakdowns, calculated price relatives ($r_j$), and validation badges.\n\n### 2. Route Explorer & Weight Configuration\n* Interactive cards for all 6 core domestic city-pairs.\n* Breakdown of route weights, base price thresholds, and daily observation counts.\n\n### 3. Collection Automation & Scheduler\n* **Scheduled Runs:** Automated daily runs scheduled at 06:00 IST.\n* **Service Connection Panel:** Connects local or cloud-hosted collector microservices over HTTPS with token authentication.\n* **Execution Audit Log:** Full table of collection runs, execution status, elapsed times, and captured fare counts.\n\n### 4. Interactive Econometric Calculator\n* Step-by-step mathematical breakdown of the Jevons formula.\n* Built-in worked example proving anti-bias properties against volatile airline pricing.\n\n### 5. Research & Policy Export\n* Instant one-click CSV export of clean, validated microdata containing:\n  `observation_id, route, horizon, airline, flight_number, source, base_fare, taxes, total_fare, observed_at, price_relative`\n\n---\n\n## \ud83d\udee1 Challenges & Engineering Mitigations\n\nA robust hackathon prototype must anticipate production hazards. AeroStat incorporates concrete engineering mitigations:\n\n| # | Challenge / Operational Risk | Real-World Impact | AeroStat Technical Mitigation |\n| :---: | :--- | :--- | :--- |\n| **1** | **Anti-Bot Defenses & IP Throttling** | Scrapers blocked by Cloudflare, Akamai, or rate-limits | Headless Playwright engine with randomized user agents, human-like scroll jitter, conservative rate limiting, and modular adapter interfaces for official GDS/API access. |\n| **2** | **Drip Pricing & Unbundled Fees** | Airlines display misleading base fares; taxes added at checkout | Strict parsing logic extracts mandatory taxes, UDF, and fees at the checkout summary stage; explicitly ignores optional add-ons (meals, seats, insurance). |\n| **3** | **Duplicate Listings Across OTAs** | Aggregators list the same physical flight at differing markups | Strict deduplication key: `(Carrier, FlightNumber, DepartureDate, Cabin)`. Computes clean carrier-direct vs. OTA averages without double-counting flight capacity. |\n| **4** | **Sold-Out Flights & Missing Fares** | Last-minute flights ($T+1$) sell out, creating missing values | Imputation follows international CPI rules: logs missing status and applies route-wide geometric price movement rather than naive zero-filling. |\n| **5** | **Weighting Discrepancies** | Lack of real-time passenger manifests | Fallback to **DGCA Table 5.01 City-Pair Statistics** as an empirical, transparent proxy until MoSPI provides internal PSD basket shares. |\n\n---\n\n## \ud83d\udcda Academic & Official Standards Compliance\n\nAeroStat's mathematical and methodological foundation is directly aligned with premier domestic and international statistical frameworks:\n\n1. **MoSPI / NSO (Base 2024 & Expert Group Report Jan 2026):**\n   * Incorporates modernization guidelines for electronic price collection and high-frequency CPI basket augmentation.\n2. **DGCA City-Pair Passenger Traffic (Table 5.01, 2024-25):**\n   * Provides authoritative domestic air traffic volume weighting ($w_r$) across Indian airports.\n3. **UK Office for National Statistics (ONS) Air Fares Methodology (March 2026):**\n   * Adopts the international best practice of segmenting airfares into separate advance-booking horizon indices ($T+1$ to $T+45$).\n4. **Ottawa Group on Price Indices (Istat, 2022):**\n   * Implements principles on *\u201cWeb Scraping and API-based Scanner Data for High-Frequency Price Statistics\u201d*.\n5. **Consumer Price Index Manual: Concepts and Methods (IMF, ILO, OECD, Eurostat, UN, World Bank, 2020):**\n   * Enforces the Jevons elementary index to eliminate Carli upward bias in volatile multi-source price environments.\n\n---\n\n## \ud83d\udcbb Technical Stack\n\n```\nFrontend Architecture:\n\u251c\u2500\u2500 HTML5 / Modern Semantic Web Layout\n\u251c\u2500\u2500 Custom Responsive CSS Design System (Glassmorphic dark/light UI)\n\u251c\u2500\u2500 Vanilla ES6+ Modular JavaScript (Zero external JS runtime dependencies)\n\u2514\u2500\u2500 Embedded SVG Micro-charts & Lead-time Curves\n\nBackend & Collection Service:\n\u251c\u2500\u2500 Python 3.11+ / Playwright (Headless browser automation)\n\u251c\u2500\u2500 FastAPI / Python http.server REST Endpoints\n\u251c\u2500\u2500 SQLite (Local Zero-Config Prototyping) & PostgreSQL (Production Scalability)\n\u251c\u2500\u2500 Pandas & NumPy (Vectorized Jevons Price Aggregation Engine)\n\u2514\u2500\u2500 Docker & Pytest (Containerization and unit testing)\n```\n\n---\n\n## \ud83d\udc65 Team & Submission Information\n\n* **Competition:** Smart India Hackathon (SIH) 2026\n* **Problem Statement ID:** `SIH26056`\n* **Problem Statement Title:** Development of a Real-time Airfare Price Index for India through Automated Web Scraping of Airline and Online Travel Aggregator Portals for Augmentation of the Consumer Price Index (CPI)\n* **Theme:** Smart Automation\n* **Category:** Software\n* **Team ID:** `183555`\n* **Team Name:** `OMEGA8`\n\n---\n\n<div align=\"center\">\n\n**AeroStat \u2014 Smarter Data. Better Airfare Insights.**  \n*Empowering MoSPI, RBI, and Indian consumers with real-time price transparency.*\n\n</div>\n";
+
+    mermaid.initialize({ startOnLoad: false, theme: 'default' });
+
+    const renderer = new marked.Renderer();
+    const originalCode = renderer.code.bind(renderer);
+    renderer.code = function(code, language) {
+      if (language === 'mermaid') {
+        return '<div class="mermaid">' + code + '</div>';
+      }
+      return originalCode(code, language);
+    };
+
+    marked.setOptions({
+      renderer: renderer,
+      gfm: true,
+      breaks: false
+    });
+
+    const target = document.getElementById('preview-target');
+    target.innerHTML = marked.parse(rawMarkdown);
+
+    // KaTeX block math & inline math
+    target.innerHTML = target.innerHTML.replace(/\$\$([\s\S]*?)\$\$/g, function(match, math) {
+      try {
+        return '<div style="text-align:center;margin:1em 0;">' + katex.renderToString(math.trim(), { displayMode: true }) + '</div>';
+      } catch(e) {
+        return match;
+      }
+    });
+
+    target.innerHTML = target.innerHTML.replace(/\$([^$\n]+?)\$/g, function(match, math) {
+      try {
+        return katex.renderToString(math.trim(), { displayMode: false });
+      } catch(e) {
+        return match;
+      }
+    });
+
+    mermaid.run();
+
+    document.getElementById('theme-btn').addEventListener('click', function() {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      if (isDark) {
+        document.documentElement.removeAttribute('data-theme');
+        document.documentElement.setAttribute('data-color-mode', 'light');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        document.documentElement.setAttribute('data-color-mode', 'dark');
+      }
+    });
+  </script>
+</body>
+</html>

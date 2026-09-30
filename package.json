@@ -2,5 +2,9 @@
   "name": "aerostat-local",
   "version": "1.0.0",
   "private": true,
-  "scripts": { "start": "node server.cjs", "dev": "node server.cjs" }
+  "scripts": {
+    "start": "node server.cjs",
+    "dev": "node server.cjs",
+    "build": "echo No build step required"
+  }
 }
